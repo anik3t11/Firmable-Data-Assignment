@@ -1,0 +1,134 @@
+# To create table for ingestion of data from Data set
+
+# main data table 
+
+CREATE TABLE firmable.data_table (
+    id STRING NOT NULL,
+    type STRING,
+    summary STRING,
+    category STRING,
+    found_date TIMESTAMP,
+    confidence_score FLOAT64,
+    article_sentence STRING,
+    human_approved BOOL,
+    planning BOOL,
+    amount STRING,
+    amount_normalized FLOAT64,
+    assets STRING,
+    assets_tags STRING,
+    award STRING,
+    contact STRING,
+    division STRING,
+    effective_date DATE,
+    event STRING,
+    financing_type STRING,
+    financing_type_normalized STRING,
+    financing_type_tags STRING,
+    headcount FLOAT64,
+    job_title STRING,
+    job_title_tags STRING,
+    location STRING,
+    location_data STRING,
+    product STRING,
+    product_full_text STRING,
+    product_name STRING,
+    product_release_type STRING,
+    product_release_version STRING,
+    product_fuzzy_match STRING,
+    product_tags STRING,
+    recognization STRING,
+    vulnerability STRING,
+    relationship_company1_id STRING,
+    relationship_company1_type STRING,
+    relationship_most_relevant_id STRING,
+    relationship_most_relevant_type STRING,
+    relationship_company2_id STRING,
+    relationship_company2_type STRING
+)
+cluster by id;
+
+-----------------------------------------------------------------------------------------------
+
+#article detail table
+
+CREATE TABLE firmable.article_details (
+    id STRING NOT NULL,
+    type STRING,
+    author STRING,
+    body STRING,
+    image_url STRING,
+    url STRING,
+    published_at TIMESTAMP,
+    title STRING
+)
+cluster by id;
+
+-----------------------------------------------------------------------------------------------
+
+ # company detail table
+
+CREATE TABLE firmable.company_details (
+    id STRING NOT NULL,
+    type STRING,
+    domain STRING,
+    company_name STRING,
+    ticker STRING
+)
+cluster by id;;
+
+-----------------------------------------------------------------------------------------------
+#DDL command for Create Data quality metric table
+ create table `pran-project-470608.firmable.data_quality_metric`(
+ ingest_date Date, --Date in which data ingested
+  total_rows Int64,
+  missing_rate Float64, -- overall missing values
+   duplicate_rate Float64, -- % Duplicate
+  validity_rate Float64, --percentage row having correct format and correct logic data
+ )
+ cluster by ingest_date;
+-----------------------------------------------------------------------------------------------
+
+# To create table dq_missing summary
+ create table `pran-project-470608.firmable.missing_summary`(
+   ingest_date Date, --Date in which data ingested
+   column_name String,
+   total_rows Int64,
+   missing_count Int64, -- overall missing values
+  missing_rate Float64, -- % missing
+ )
+ cluster by ingest_date;
+
+-----------------------------------------------------------------------------------------------
+
+# To create table duplicate_summary table
+ create table `pran-project-470608.firmable.duplicate_summary`(
+   ingest_date Date, --Date in which data ingested
+   column_name String,
+   total_rows Int64,
+   duplicate_count Int64, -- overall duplicate values
+   duplicate_rate Float64, -- % duplicate rate
+ )
+cluster by ingest_date;
+-----------------------------------------------------------------------------------------------
+# to create dq_validation_summary table
+ create table `pran-project-470608.firmable.validation_check`(
+   ingest_date Date, --Date in which data ingested
+  total_rows Int64,
+   error_count Int64, -- overall error values
+   error_rate Float64, -- % error_rate
+ )
+ cluster by ingest_date
+
+-----------------------------------------------------------------------------------------------
+
+#to create data_quality_error_report table
+ create table `pran-project-470608.firmable.data_quality_error_report`(
+   ingest_date Date, --Date in which data ingested
+   remark String,
+  column_name string, -- overall missing values
+   metric Float64, -- % Duplicate
+ )
+ cluster by ingest_date
+
+
+
