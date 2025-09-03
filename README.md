@@ -13,7 +13,7 @@ Setup and Running Instructions
 
 2. Required Files
 	•	A service account JSON key file is required to connect to Google BigQuery.
-	•	The JSON file path is referenced in the code (e.g., my_project_key.json).
+	•	The JSON file path is referenced in the code (e.g., my_project_key.json). you can download from this link https://drive.google.com/file/d/1NctPzZNYBJ2Yh4VrN2XBD5wA8sOk_3p4/view?usp=drive_link
 	•	Users must upload this JSON file to their Colab session (or their Google Drive) before running the code.
 
 3. Required Libraries
