@@ -1,0 +1,98 @@
+# To get duplicate data or data for duplicate summary
+
+with base as
+(select a.id,d.id article_id,summary,concat(summary,'A',found_date) combi_column,date(found_date) found_date
+from firmable.data_table a
+left join firmable.company_details b on a.relationship_company1_id = b.id 
+left join firmable.company_details c on a.relationship_company2_id = c.id 
+left join `firmable.article_details`  d on a.relationship_most_relevant_id = d.id
+where date(found_date) >= (select max(date(found_date)) from  firmable.data_table) - interval 30 day
+)
+select found_date ingest_date,
+        column column_name,
+        total_rows,
+        total_rows - distinct_rows duplicate_count,
+          round((100 - distinct_rows*100.00/total_rows),2) duplicate_rate
+from
+(select 'id' column,found_date ,count(id) total_rows,count(distinct id) distinct_rows
+from base
+group by found_date
+union all
+select 'article_id' column ,found_date ,count(article_id) total_rows,count(distinct article_id) distinct_rows
+from base
+group by found_date
+union all
+select 'summary' column ,found_date ,count(summary) total_rows,count(distinct summary) distinct_rows
+from base
+group by found_date
+union all
+select 'combi_column' column ,found_date ,count(combi_column) total_rows,count(distinct combi_column) distinct_rows
+from base
+group by found_date) as a
+
+
+# Data for validation check
+
+with missing as
+(select ingest_date,avg(total_rows) total_rows,round(sum(a.missing_count)*100.00/sum(a.total_rows),2) missing_rate
+from `pran-project-470608.firmable.missing_summary` a
+group by 1),
+duplicate as
+(select ingest_date,round(sum(a.duplicate_count)*100.00/sum(a.total_rows),2) duplicate_rate
+from `pran-project-470608.firmable.duplicate_summary` a
+group by 1),
+validate as
+(select ingest_date,round(sum(a.error_count)*100.00/sum(a.total_rows),2) error_rate
+from `pran-project-470608.firmable.validation_check` a
+group by 1 )
+select a.ingest_date ingest_date,a.total_rows total_rows,a.missing_rate,b.duplicate_rate,c.error_rate
+from missing a 
+left join  duplicate b  on b.ingest_date = a.ingest_date
+left join validate c on c.ingest_date = a.ingest_date
+
+
+
+# Data for quality metric table
+
+with missing as
+(select ingest_date,avg(total_rows) total_rows,round(sum(a.missing_count)*100.00/sum(a.total_rows),2) missing_rate
+from `pran-project-470608.firmable.missing_summary` a
+group by 1),
+duplicate as 
+(
+  select ingest_date,round(sum(a.duplicate_count)*100.00/sum(a.total_rows),2) duplicate_rate
+from `pran-project-470608.firmable.duplicate_summary` a
+group by 1 
+),
+validate as
+(
+  select ingest_date,round(sum(a.error_count)*100.00/sum(a.total_rows),2) error_rate
+from `pran-project-470608.firmable.validation_check` a
+group by 1  
+)
+select a.ingest_date ingest_date,a.total_rows total_rows,a.missing_rate,b.duplicate_rate,c.error_rate
+from missing a  
+left join  duplicate b  on b.ingest_date = a.ingest_date
+left join validate c on c.ingest_date = a.ingest_date
+
+
+# To filter out rows with diffenrent id but same article id
+#Used row number function to filter the data
+
+with base as
+(select a.id id,a.found_date found_date,a.summary,a.category,a.planning,a.confidence_score,a.effective_date,d.published_at,d.id article_id
+from firmable.data_table a
+left join firmable.company_details b on a.relationship_company1_id = b.id 
+left join firmable.company_details c on a.relationship_company2_id = c.id 
+left join `firmable.article_details`  d on a.relationship_most_relevant_id = d.id
+)
+select * 
+from
+(select *,row_number()over(partition by article_id order by effective_date desc,id ) rnk
+from base)
+where rnk = 1
+
+
+
+
+ 
