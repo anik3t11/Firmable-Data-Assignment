@@ -48,7 +48,7 @@ All necessary libraries are pre-installed in Google Colab; no additional install
 
 Dashboard Access
 
-You can view the dashboard here.https://lookerstudio.google.com/u/2/reporting/a79dc567-8837-4844-9237-700e113c8006/page/xUgWF
+[You can view the dashboard here](https://lookerstudio.google.com/u/2/reporting/a79dc567-8837-4844-9237-700e113c8006/page/xUgWF)
 
 The dashboard contains:
 	1.	Data Quality Metrics
