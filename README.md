@@ -4,9 +4,13 @@ Data qulity assurance of New event Dataset
 Repository Overview
 
 This repository contains code, scripts, and analysis for data ingestion, exploration, and visualization. Below are the key files and their purposes:
+
 	•	db_ingestion__code.ipynb – Converts raw JSONL data into structured rows and columns, and ingests it into target tables.
+ 
 	•	eda_Assignment (1).ipynb – Main EDA assignment notebook containing all analysis steps.
+ 
 	•	DDL Scripts – SQL scripts to define database schemas and tables for data storage.
+ 
 	•	DQL Scripts – SQL scripts for querying data for various analysis purposes.
 
 ⸻
