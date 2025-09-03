@@ -22,7 +22,7 @@ Setup and Running Instructions
 2. Required Files
 	•	A Service Account JSON key file is required to connect to Google BigQuery.
 	•	The JSON key file (e.g., my_project_key.json) can be downloaded from the following link:
-Download JSON Key
+[Download JSON Key](https://drive.google.com/file/d/1NctPzZNYBJ2Yh4VrN2XBD5wA8sOk_3p4/view?usp=drive_link )
 (Unable to upload this file directly to GitHub due to security reasons.)
 	•	Upload this JSON file to your Colab session (or your Google Drive) before running the code.
 
@@ -48,7 +48,7 @@ All necessary libraries are pre-installed in Google Colab; no additional install
 
 Dashboard Access
 
-You can view the dashboard here.
+You can view the dashboard here.https://lookerstudio.google.com/u/2/reporting/a79dc567-8837-4844-9237-700e113c8006/page/xUgWF
 
 The dashboard contains:
 	1.	Data Quality Metrics
