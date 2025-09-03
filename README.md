@@ -39,13 +39,22 @@ All necessary libraries are pre-installed in Google Colab; no additional install
 ⸻
 
 4. Steps to Reproduce
+   
 	1.	Open Google Colab Notebook
-	•	Upload or open the provided .ipynb notebooks in Google Colab.
+    
+	•	Upload or open the provided
+	.ipynb notebooks in Google Colab.
+
 	2.	Upload the JSON Key File
+
 	•	Upload the downloaded key file to your Colab session or mount it from Google Drive.
+
 	3.	Update the JSON Key Path
+    
 	•	Modify the code to point to the uploaded key file path.
+
 	4.	Run Code Cells
+    
 	•	Execute the notebook cells sequentially to load data, run analysis, and generate outputs.
 
 ⸻
