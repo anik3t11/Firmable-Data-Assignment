@@ -13,18 +13,20 @@ Setup and Running Instructions
 
 2. Required Files
 	•	A service account JSON key file is required to connect to Google BigQuery.
-	•	The JSON file path is referenced in the code (e.g., my_project_key.json). you can download from this link https://drive.google.com/file/d/1NctPzZNYBJ2Yh4VrN2XBD5wA8sOk_3p4/view?usp=drive_link
+	•	The JSON file path is referenced in the code (e.g., my_project_key.json). you can download from this link https://drive.google.com/file/d/1NctPzZNYBJ2Yh4VrN2XBD5wA8sOk_3p4/view?usp=drive_link (Not able to upload it directly to git)
+
 	•	Users must upload this JSON file to their Colab session (or their Google Drive) before running the code.
 
-3. Required Libraries
+4. Required Libraries
 All required libraries are available by default in Colab
 
-4. Steps to Reproduce
+5. Steps to Reproduce
 	1.	Open Google Colab Notebook
 	•	Upload or open the notebook file provided (.ipynb).
 	2.	Upload the JSON Key File
+ 	3. Update the Josn key path.	
 
-5. Run the Code Cells Sequentially
+6. Run the Code Cells Sequentially
 	•	Execute all notebook cells step by step to load data, perform analysis, and generate results.
 
 Dashboard Access 
