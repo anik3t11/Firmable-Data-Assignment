@@ -33,26 +33,21 @@ group by found_date) as a
 
 # Data for validation check
 
-with missing as
-(select ingest_date,avg(total_rows) total_rows,round(sum(a.missing_count)*100.00/sum(a.total_rows),2) missing_rate
-from `pran-project-470608.firmable.missing_summary` a
-group by 1),
-duplicate as
-(select ingest_date,round(sum(a.duplicate_count)*100.00/sum(a.total_rows),2) duplicate_rate
-from `pran-project-470608.firmable.duplicate_summary` a
-group by 1),
-validate as
-(select ingest_date,round(sum(a.error_count)*100.00/sum(a.total_rows),2) error_rate
-from `pran-project-470608.firmable.validation_check` a
-group by 1 )
-select a.ingest_date ingest_date,a.total_rows total_rows,a.missing_rate,b.duplicate_rate,c.error_rate
-from missing a 
-left join  duplicate b  on b.ingest_date = a.ingest_date
-left join validate c on c.ingest_date = a.ingest_date
+select ingest_date,total_rows,error_count,
+round(error_count*100.00/total_rows,2)  error_rate
+from
+(select date(found_date) ingest_date,count(*) total_rows,
+   sum(case when date(found_date)<coalesce(date(effective_date),date(published_at)) and planning = False then 1 else 0 end) error_count
+ from firmable.data_table a
+left join firmable.company_details b on a.relationship_company1_id = b.id --620785
+left join firmable.company_details c on a.relationship_company2_id = c.id --620785
+left join  `firmable.article_details` d on a.relationship_most_relevant_id = d.id
+group by 1) as a
 
 
 
 # Data for quality metric table
+
 
 with missing as
 (select ingest_date,avg(total_rows) total_rows,round(sum(a.missing_count)*100.00/sum(a.total_rows),2) missing_rate
